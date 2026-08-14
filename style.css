@@ -250,11 +250,12 @@ a {
 }
 
 /* ==========================================================================
-   5. Video Containers (Native Video & iFrame)
+   5. Video Containers (Native Video & iFrame Aspect Ratios)
    ========================================================================== */
 .video-wrapper {
   position: relative;
   width: 100%;
+  aspect-ratio: 16 / 9; /* Strictly locks horizontal videos to 16:9 widescreen */
   border-radius: var(--border-radius);
   overflow: hidden;
   background-color: #000;
@@ -262,29 +263,50 @@ a {
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
 }
 
+/* Widescreen Video Elements */
+.video-wrapper video,
 .video-wrapper iframe {
-  display: block;
   width: 100%;
-  aspect-ratio: 16 / 9;
+  height: 100%;
+  display: block;
+  object-fit: cover; /* Fills the 16:9 frame perfectly edge-to-edge */
   border: 0;
 }
 
-.video-wrapper.vertical iframe {
-  aspect-ratio: 9 / 16;
+/* Vertical Video Wrapper (9:16 Reel Ratio) */
+.video-wrapper.vertical {
+  aspect-ratio: 9 / 16; /* Strictly locks reels to 9:16 vertical format */
 }
 
-.video-wrapper video {
-  display: block;
+.video-wrapper.vertical video,
+.video-wrapper.vertical iframe {
   width: 100%;
-  height: auto;
-  border-radius: var(--border-radius);
-  object-fit: cover;
+  height: 100%;
+  display: block;
+  object-fit: cover; /* Fills vertical frame with zero black side-bars */
 }
 
 .featured-reel {
   max-width: 960px;
   margin: 0 auto;
 }
+
+/* ==========================================================================
+   Vertical Grid Sizing Fix
+   ========================================================================== */
+.vertical-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 320px));
+  justify-content: center; /* Centers vertical reel cards neatly */
+  gap: 2.5rem;
+}
+
+.vertical-grid .project-card {
+  max-width: 340px;
+  margin: 0 auto;
+  width: 100%;
+}
+
 
 /* ==========================================================================
    6. Work Section & Filtering Grid
